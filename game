@@ -1,8 +1,0 @@
-# introduction story
-OUTPUT"the story information and how to play"
-
-#ask user to select the option
-numOption<- USERINPUT
-TOTALSCORE<-0
-
-#
