@@ -8,9 +8,9 @@ OUTPUT"enter the number 1 or 2"
 
 numOption <- USERINPUT
 
-TOTALSCORE <- 0
+TOTALSCORE <- 0 
 
-choise 1 = userinput 
+choise 1 = userinput
 
 If choise = 1 Then
 
@@ -20,6 +20,6 @@ If choise = 2 Then
 
 else
 
-output the number 1 oe 2
+output the number 1 or 2
 
 #
