@@ -10,15 +10,15 @@ numOption <- USERINPUT
 
 TOTALSCORE <- 0
 
-chose 1 = userinput
+numOption = userinput
 
-If chose = 1 Then
+If numOption = 1 Then
 
 have another 1 or 2 to chose until ending
 
-chose 2 = userinput
+numOption = userinput
 
-Elseif chose = 2 Then
+Elseif numOption = 2 Then
 
 have another 1 or 2 to chose until ending
 
