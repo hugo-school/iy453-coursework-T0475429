@@ -62,7 +62,7 @@ OUTPUT "you select number 2."
 
 #EXPANDAD GAME
 
-#After numOption = 1 or numOption = 2, you will have option 1 or 2 until the end or dead.
+#After numOption = 1 or numOption = 2, after pick 1 or 2 it will lead to other option 1 or 2, it until the end or player dead.
 
 #EVENT
 
