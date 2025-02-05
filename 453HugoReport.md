@@ -8,7 +8,7 @@ Ending
 
 ask player select number
 
-event(varied item, weather)
+event(varied item, weather, weather)
 
 attributes(health, attack and defense)
 
@@ -67,6 +67,10 @@ OUTPUT "you select number 2."
 #EVENT
 
 #EVENT IS REDOM ON THIS 3 THING, SPEICAL MASTER, ITEAM AND WEATHER
+
+#ATTRIBUTES
+
+#IT SHOW HEALTH ,ATTACK AND DEFENSE. WHEN HEALTH 0 THEN PLAYER DEAD. 
 
 #Score system
 
