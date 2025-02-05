@@ -1,10 +1,16 @@
-#stat the story 
+#stat the story
 
-OUTPUT"introduction the story and tell them how to play
 
-#Ask user select the number
+#introduction
 
-OUTPUT"enter the number 1 or 2"
+OUTPUT"introduction the story and tell them how to play"
+
+OUTPIT"PLS ENTER 1 OR 2 TO PLAY THE GAMES"
+
+
+#user select the number 1
+
+OUTPUT"you select number 1 "
 
 numOption <- USERINPUT
 
@@ -16,27 +22,32 @@ If numOption = 1 Then
 
 have another 1 or 2 to chose until ending
 
-numOption = userinput
+
+#user select the number 2
+
+OUTPUT" you select number 2"
+
+numOption <- userinput
 
 Elseif numOption = 2 Then
 
 have another 1 or 2 to chose until ending
 
-else
-
-output the number 1 or 2
 
 #score system
 
-score = 0
+IF TOTALSCORE < 0 THEN 
 
 OUTPUT" your dead"
 
-score <- score -1
+TOTALSCORE<- TOTALSCORE -1
 
 else
 
 score <- Score +1
+
+ENDIF
+
 
 #save
 
@@ -46,9 +57,10 @@ SAVEDATA "save.txt", score
 
 OUTPUT" you save your game"
 
+
 #Error
 
-numOption <- userinput out of 1 or 2 
+numOption <- userinput out of 1 or 2
 
 OUTPUT"pls enter the number 1 or 2"
 
@@ -60,7 +72,7 @@ required to do a text-based adventure game, the game should let the player with 
 
 output:
 
-introduction and role 
+introduction and role
 
 Ending
 
