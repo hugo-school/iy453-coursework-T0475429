@@ -33,6 +33,10 @@ Elseif numOption = 2 Then
 
 have another 1 or 2 to chose until ending
 
+Else
+
+OUTPUT"pls enter the number 1 or 2 to playx"
+
 
 #score system
 
