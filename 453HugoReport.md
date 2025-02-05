@@ -1,4 +1,4 @@
-required to do a text-based adventure game, the game should let the player with binary choices(two options). It must attract the player.Allowed the player collect varied items and the variety of senarios, each item have impact like increase health. Last need a save, scorce and error system.
+required to do a text-based adventure game, the game should let the player with binary choices(two options). It must attract the player.Allowed the player collect varied items and the variety of senarios, each item have impact like increase health. Last need a save, scorce and error system. Here have at least 30 binary to let player to chose.
 
 output:
 
@@ -28,6 +28,7 @@ score
 
 error(when the player dont enter num 1 or 2)
 
+---
 
 Pseduo code
 
@@ -40,7 +41,6 @@ OUTput" PLS ENTER 1 OR 2."
 numOption<-USERINPUT
 
 TOTALSCORE<- 0
-
 
 #player select number
 
@@ -60,17 +60,19 @@ OUTPUT "you select number 2."
 
 -> ENDSUBROUTINE
 
-#EXpanded game
+#EXPANDAD GAME
 
 #After numOption = 1 or numOption = 2, you will have option 1 or 2 until the end or dead.
 
+#EVENT
+
+#EVENT IS REDOM ON THIS 3 THING, SPEICAL MASTER, ITEAM AND WEATHER
 
 #Score system
 
 IF TOTALSCORE<0 THEN
 
 ->OUTPUT"YOU DEAD."
-
 
 #SAVE THE GAME
 
@@ -79,7 +81,6 @@ OUTPUT"SAVE THE GAME."
 SAVEDATA"save.txt",TOTALSCORE
 
 OUTPUT"YOU SAVED THE GAME."
-
 
 #ERROR HADLING
 IF numOption not equal 1 or equal 2 THEN
