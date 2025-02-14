@@ -12,6 +12,9 @@ int main() {
         if (choice == 1) {
             cout << "You choose to become a Swordsman" << endl;
         }
+        else if (choice == 2) {
+            cout << "You choose to become a Magician" << endl;
+        }
     }
 
 }
