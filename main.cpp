@@ -42,7 +42,58 @@ public:
         cout<<"health:"<<health<<endl;
         cout<<"magic:"<<magic<<endl;
     }
+};
 
+class Weather {
+public:
+    string type;
+    int strengthEffect;
+    int healthEffect;
+    int magicEffect;
+
+    Weather(string weatherType, int strEffect, int hpEffect, int magEffect) {
+        type = weatherType;
+        strengthEffect = strEffect;
+        healthEffect = hpEffect;
+        magicEffect = magEffect;
+    }
+
+    void applyWeatherEffect(player &p) {
+        p.setstrength(p.getstrength() + strengthEffect);
+        p.sethealth(p.gethealth() + healthEffect);
+        p.setmagic(p.getmagic() + magicEffect);
+    }
+};
+
+class WeatherVector {
+    vector<Weather> tempWeather;
+
+public:
+    void loadWeatherFromFile(string filename) {
+        ifstream file(filename);
+        string line;
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string type;
+            int strength, health, magic;
+
+            getline(ss, type, ',');
+            ss >> strength;
+            ss.ignore();
+            ss >> health;
+            ss.ignore();
+            ss >> magic;
+
+            Weather weather(type, strength, health, magic);
+            tempWeather.push_back(weather);
+        }
+    }
+
+    Weather getRandomWeather(){
+        int index = rand() %10;
+        tempWeather.size();
+        return tempWeather[index];
+    }
 };
 
 class PlayerVector {
@@ -54,13 +105,12 @@ public:
     }
 
     void displayPlayersVector() {
-        for (size_t i = 0; i < tempplayers.size(); i++) {
+        for (int i = 0; i < tempplayers.size(); i++) {
             cout << "Player " << i + 1 << " Info:" << endl;
             tempplayers[i].display();
             cout << endl;
         }
     }
-
 
     void readFile() {
         string tempLine;
@@ -69,7 +119,8 @@ public:
         float tempHealth;
         float tempMagic;
 
-        fstream fs("playerRead.txt");
+        fstream fs;
+        fs.open("playerRead.txt");
         if(fs.is_open()) {
             cout<<"File opened"<<endl;
 
@@ -105,6 +156,7 @@ void status(int strength, int health, int magic) {
     cout<<"health:"<<health<<endl;
     cout<<"magic:"<<magic<<endl;
 }
+
 
 
 
@@ -227,6 +279,7 @@ void status(int strength, int health, int magic) {
         }
         return 0;
     }
+
 
 
 
