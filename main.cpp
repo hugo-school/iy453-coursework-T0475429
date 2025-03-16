@@ -161,124 +161,172 @@ void status(int strength, int health, int magic) {
 
 
     int main() {
-        PlayerVector s1;
-        s1.readFile();
-        s1.displayPlayersVector();
+    PlayerVector s1;
+    s1.readFile();
+    s1.displayPlayersVector();
 
 
-        int choice;
-        int strength =10, health=100, magic=10; //status
+    int choice;
+    int strength =10, health=100, magic=10; //status
 
-        cout << "Welcome to play brave adventure. \nWhen health less than 0, you die. \nPress 1 to start the game" <<endl;
+    cout << "Welcome to play brave adventure. \nWhen health less than 0, you die. \nPress 1 to start the game" <<endl;
+    cin >> choice;
+    if (choice == 1) {
+        //start the game
+        cout << "You turn to 18 today, now you find priest to become \n1 Swordsman \n2 Magician" << endl;
         cin >> choice;
-        if (choice == 1) {
-            //start the game
-            cout << "You turn to 18 today, now you find priest to become \n1 Swordsman \n2 Magician" << endl;
-            cin >> choice;
 
-            while (health>0) {
-                if (choice == 1) { //swordsman 1 //number mean the story line
-                    cout << "You choose to become a Swordsman" << endl;
+        while (health>0) {
+            if (choice == 1) { //swordsman
+                cout << "You choose to become a Swordsman" << endl;
+            }
+            else if (choice == 2) { //magic
+                cout << "You choose to become a Magician" << endl;
+            }
+            else {
+                cout << "please enter number 1 or 2" << endl;
+            }
+
+            if (choice == 1) {//swordsman 1
+                cout << "now what should i do?\n1 Go out adventure \n2 keep training(10 years)"<<endl;
+                cin >> choice;
+                if (choice == 1) {
+                    cout << "you find a dark area " << endl;
                 }
-                else if (choice == 2) { //magic 1
-                    cout << "You choose to become a Magician" << endl;
+                else if (choice == 2) {
+                    cout << "you gain the 20 strength and 30 health " << endl;
+                    strength += 20;
+                    health += 30;
+                    status(strength, health, magic);
                 }
                 else {
                     cout << "please enter number 1 or 2" << endl;
                 }
 
+                if (choice == 1) { //swordsman 1 out adventure
+                    cout<<" in dark area you met the dark wolf, this wolf can hide in the shadow. \n1 run away \n2 fight"<<endl;
+                    cin >> choice;
+                    if (choice == 1) {
+                        cout<< "you try to run away,your back got hit, you injured  " << endl;
+                        health -= 20;
+                        strength -= 2;
+                        status(strength, health, magic);
+                    }
+                    else if (choice == 2) {
+                        if (health > 100 && strength > 11) {
+                        cout<< "you bet the dark wolf (Minor injuries), you got dark material   " << endl;
+                        health -= 8;
+                        status(strength, health, magic);
+                    }
+                    else {
+                        cout << "you lose, but lucky you run away" << endl;
+                        health -= 10;
+                        status(strength, health, magic);
+                    }
+                }
+
+                if (choice == 1) {//swordsman 1
+                    cout << "you are injured \n1 should i go hospital \n2 ignore it   " << endl;
+                    cin >> choice;
+                    if (choice == 1) {
+                        cout<< "you stay hospital 5 mouths you feel good now. " << endl;
+                        health += 10;
+                        status(strength, health, magic);
+                    }
+                    else if (choice == 2) {
+                        cout<< "The injury more serious than you expected. \nYou die \n Contempt Ending"<< endl;
+                    }
+                }
+
                 if (choice == 1) {
-                    cout << "now what should i do?\n1 Go out adventure \n2 keep training(10 years)"<<endl;
+                    cout << "" << endl;
+                }
+
+
+                if (choice == 2) { //swordsman 2
+                    cout << "You got dark material, go to weapon shop. make a? \n1 swords \n2 Armor " << endl;
                     cin >> choice;
-                    if (choice == 1) {// swordsman 3
-                        cout << "you find a dark area " << endl;
+                    if (choice == 1) {
+                        cout<< "you get a sword"<<endl;
+                        strength += 5;
                     }
-                    else if (choice == 2) { //swordsman 4
-                        cout << "you gain the 20 strength and 30 health " << endl;
-                        strength += 20;
-                        health += 30;
+                    else if (choice == 2) {
+                        cout<< "you get a armor"<<endl;
+                        health += 10;
+                    }
+                }
+
+                if (choice == 1) { //swordsman 2
+                    cout<< "one day dragon come to town. \n1 run away \n Participate in the Dragon "<<endl;
+                    cin >> choice;
+                    if (choice == 1) {
+                        cout<< "You survive, after two days you hear whole town got burn. You very self-blaming, get depression then you suicide. \n Coward Ending "<<endl;
+                    }
+                    else if (choice == 2) {
+                        if (health > 110 && strength > 15) {
+                            cout << "You bravely fight the dragon and after a battle, You Victorious! \n Heroic Ending."<<endl;
+                    }
+                        else {
+                            cout << "You attempt to fight the dragon, but you are too weak. \nSad Ending." << endl;
+                        }
+                }
+
+                if (choice == 2) { //swordsman 2 training
+                    cout<< "after 10 years training you turn to first-class swordsman. what should i do now ?  \n1 show your power to people \n2 keep training(20 years)" << endl;
+                    cin >> choice;
+                    if (choice == 1) {
+                        cout<< "challenge swordsman ranking" << endl;
+                    }
+                    else if (choice == 2) {
+                        cout<< "keep training 20 years " << endl;
+                        strength += 100;
+                        health += 100;
                         status(strength, health, magic);
                     }
                     else {
                         cout << "please enter number 1 or 2" << endl;
                     }
-
-                    if (choice == 1) {
-                        cout<<" in dark area you met the dark wolf, this wolf can hide in the shadow. \n1 run away \n2 fight"<<endl;
-                        cin >> choice;
-                        if (choice == 1) {// swordsman5
-                            cout<< "you try to run away,your back got hit, you injured  " << endl;
-                            health -= 20;
-                            strength -= 2;
-                            status(strength, health, magic);
-                        }
-                        else if (choice == 2) {// swordsman 6
-                            cout<< "you bet the dark wolf (Minor injuries), you got dark material   " << endl;
-                            health -= 8;
-                            status(strength, health, magic);
-                        }
-                        else {
-                            cout << "please enter number 1 or 2" << endl;
-                        }
-                    }
-
-                    if (choice == 2) {
-                        cout<< "after 10 years training you turn to first-class swordsman. what should i do now ?  \n1 show your power to people \n2 keep training(20 years)" << endl;
-                        cin >> choice;
-                        if (choice == 1) {
-                            cout<< "challenge swordsman ranking" << endl;
-                        }
-                        else if (choice == 2) {
-                            cout<< "keep training 20 years " << endl;
-                            strength += 100;
-                            health += 100;
-                            status(strength, health, magic);
-                        }
-                        else {
-                            cout << "please enter number 1 or 2" << endl;
-                        }
-                    }
-
-                    if (choice == 1) {
-                        cout << "after run away dark area, you go to town rest 2 years, but cause curse  " << endl;
-                    }
-
-
-
-                }else if (choice == 2) {
-                    //magic 1
-                    cout << "your talent on magic is bad(fall 8 strength) \n1 exploring magic area(5 years) \n2 give up change to swordsmam  "<<endl;
-                    cin >> choice;
-                    if (choice == 1) { //magic 2
-                        cout << "you keep exploring magic areas, yor magic still the same" << endl;
-                    }
-                    else if (choice == 2) {// magic 3
-                        cout << "you find priest change career, but he said when you already chose the career can't be change. \nIn rest of the year you done nothing until to dead \nLazy Ending  " << endl;
-                        health= 0;
-                    }
-                    else {
-                        cout << "please enter number 1 or 2" << endl;
-                    }
                 }
-                if (choice ==1){ //magic 2
-                    cout << "you decided to \n1 get out \n2 keep training(20 years)" << endl;
-                    cin >> choice;
-                    if (choice == 1) {//magic 4
-                        cout << "you join a Adventure team "<< endl;
-                    }
-                    else if (choice == 2) { //magic 5
-                        cout <<"you realise you almost hit the magic truth " << endl;
-                        magic += 70;
-                        status(strength, health, magic);
-                    }
+
+
+
+
+
+            }else if (choice == 2) { //magic
+                cout << "your talent on magic is bad(fall 8 strength) \n1 exploring magic area(5 years) \n2 give up change to swordsmam  "<<endl;
+                cin >> choice;
+                if (choice == 1) {
+                    cout << "you keep exploring magic areas, yor magic still the same" << endl;
                 }
-                if (health <= 0) {
-                    cout << "\nGame Over" << endl;
+                else if (choice == 2) {
+                    cout << "you find priest change career, but he said when you already chose the career can't be change. \nIn rest of the year you done nothing until to dead \nLazy Ending  " << endl;
+                    health= 0;
+                }
+                else {
+                    cout << "please enter number 1 or 2" << endl;
                 }
             }
+            if (choice ==1){  //magic
+                cout << "you decided to \n1 get out \n2 keep training(20 years)" << endl;
+                cin >> choice;
+                if (choice == 1) {
+                    cout << "you join a Adventure team "<< endl;
+                }
+                else if (choice == 2) {
+                    cout <<"you realise you almost hit the magic truth " << endl;
+                    magic += 70;
+                    status(strength, health, magic);
+                }
+            }
+
+
+            if (health <= 0) {
+                cout << "\nGame Over" << endl;
+            }
         }
-        return 0;
     }
+    return 0;
+}
 
 
 
