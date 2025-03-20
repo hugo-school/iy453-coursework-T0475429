@@ -1,3 +1,3 @@
-/Users/hugochan/CLionProjects/untitled14/cmake-build-debug/CMakeFiles/untitled14.dir
-/Users/hugochan/CLionProjects/untitled14/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/hugochan/CLionProjects/untitled14/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/hugochan/Downloads/untitled14/cmake-build-debug/CMakeFiles/untitled14.dir
+/Users/hugochan/Downloads/untitled14/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/hugochan/Downloads/untitled14/cmake-build-debug/CMakeFiles/rebuild_cache.dir

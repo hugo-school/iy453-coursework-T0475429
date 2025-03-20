@@ -327,13 +327,6 @@ void status(int strength, int health, int magic) {
                         }
 
 
-
-
-
-
-
-
-
                     }else if (choice == 2) { //magic
                         cout << "your talent on magic is bad(fall 8 strength) \n1 exploring magic area(5 years) \n2 give up change to swordsmam  "<<endl;
                         cin >> choice;
@@ -360,6 +353,48 @@ void status(int strength, int health, int magic) {
                             status(strength, health, magic);
                         }
                     }
+                    if (choice == 1) {
+                    cout<< "The team in 5 year turn to A class, they deiced you be a leader \n1 accept \n2 reject    " << endl;
+                    cin >> choice;
+                    if (choice == 1) {
+                    cout << "You accept the leader " << endl;}
+                    else if (choice == 2) {
+                    cout << "You reject the leader " << endl;}
+                    }
+
+                if (choice == 1) {
+                    cout << "You accept the leader, now have a option to become s tier s should we join the mission \n1 join \n2 reject  " << endl;
+                    cin >> choice;
+                    if (choice == 1) {
+                        cout << "your team go to dungeon  " << endl;
+                    }
+                    else if (choice == 2) {
+                        cout << "you reject, cause you dont fill you guys ready yet " << endl;
+                    }
+                }
+                if (choice == 1) {
+                    cout << "in the dungeon your team " << endl;
+                }
+
+                if (choice == 2) {
+                    cout << "After training (20 years), should i \n1  get out \n2 keep training(30 years) " << endl;
+                    cin >> choice;
+                    if (choice == 1) {
+                        cout << "You a one of the best magician, a lot party try to recruit you. " << endl;
+                    }
+                    else if (choice == 2) {
+                        cout << "you find out the true meaning of magic " << endl;
+                        magic += 300;
+                        status(strength, health, magic);
+                    }
+                }
+
+
+
+
+
+
+
 
 
                     if (health <= 0) {
@@ -370,6 +405,31 @@ void status(int strength, int health, int magic) {
             return 0;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
