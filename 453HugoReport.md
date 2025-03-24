@@ -1,4 +1,4 @@
-required to do a text-based adventure game, the game should let the player with binary choices(two options). It must attract the player.Allowed the player collect varied items and the variety of senarios, each item have impact like increase health. Last need a save, scorce and error system. Here have at least 30 binary to let player to chose.
+required to do a text-based adventure game, the game should let the player with binary choices(two options). It must attract the player. Allowed the player collect varied items and the variety of scenarios, each item have impact like increase health. Last need a saves, scorce and error system. Here have at least 30 binaries to let player to choose.
 
 output:
 
@@ -70,7 +70,7 @@ OUTPUT "you select number 2."
 
 #ATTRIBUTES
 
-#IT SHOW HEALTH ,ATTACK AND DEFENSE. WHEN HEALTH 0 THEN PLAYER DEAD. 
+#IT SHOW HEALTH ,ATTACK AND DEFENSE. WHEN HEALTH 0 THEN PLAYER DEAD.
 
 #Score system
 

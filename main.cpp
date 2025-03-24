@@ -164,6 +164,33 @@ void status(int strength, int health, int magic) {
     cout<<"magic:"<<magic<<endl;
 }
 
+class Item {
+protected:
+    string name;
+    int value;
+
+
+    public:
+    Item(string n, int v) : name(n), value(v) {}
+
+    string getName() const {
+        return name;
+    }
+    int getValue() const {
+        return value;
+    }
+    virtual void displayDetails() = 0;
+
+};
+class Weapon : public Item {
+private:
+    int strength;
+
+
+public:
+    Weapon(string n, int v, int ap, int sEffect = 0, int hEffect = 0, int mEffect = 0)
+       : Item(n, v, sEffect, hEffect, mEffect), strength(ap) {}
+};
 
 
 
@@ -388,14 +415,6 @@ void status(int strength, int health, int magic) {
                         status(strength, health, magic);
                     }
                 }
-
-
-
-
-
-
-
-
 
                     if (health <= 0) {
                         cout << "\nGame Over" << endl;
