@@ -1,3 +1,11 @@
+Introduction
+
+This project involves creating a text adventure game in C++, the game includes choices, combat and inventory system. Players will decide between 1 and 2, those can affect the story. The code has a player and enemy class, to manage attributes includes health attack and magic, when the player health equal or less than 0 will game over. Each story line has an ending, to  ensure the story funny enough. The code has a random weather class to make sure a story not same every time.
+
+
+
+Required
+
 required to do a text-based adventure game, the game should let the player with binary choices(two options). It must attract the player. Allowed the player collect varied items and the variety of scenarios, each item have impact like increase health. Last need a saves, scorce and error system. Here have at least 30 binaries to let player to choose.
 
 output:
