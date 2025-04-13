@@ -11,13 +11,16 @@ class player{
      float strength;
      float health;
      float magic;
+     string name;
+     int score;
 public:
-    player():strength(0), health(0), magic(0){}
+    player():strength(0), health(0), magic(0), score(0){}
 
     player(float tempstrength,float temphealth,float tempmagic){
         strength=tempstrength;
         health=temphealth;
         magic=tempmagic;
+        score=0;
     }
 
     float getstrength(){
@@ -29,6 +32,23 @@ public:
     float getmagic(){
         return magic;
     }
+
+    int getScore(){
+        return score;
+    }
+    void setScore(int tempScore){
+        score = tempScore;
+    }
+    void addScore(int points){
+        score += points;
+    }
+
+    string getName(){
+        return name;
+    }
+    void setName(string tempName){
+        name = tempName;
+    }
     void setstrength(float tempstrength){
         strength=tempstrength;
     }
@@ -39,9 +59,11 @@ public:
         magic=tempmagic;
     }
     void display() {
-        cout<<"strength:"<<strength<<endl;
-        cout<<"health:"<<health<<endl;
-        cout<<"magic:"<<magic<<endl;
+        cout << "Name: " << name << endl;
+        cout << "Strength: " << strength << endl;
+        cout << "Health: " << health << endl;
+        cout << "Magic: " << magic << endl;
+        cout << "Score: " << score << endl;
     }
 };
 
@@ -158,10 +180,13 @@ public:
     }
 };
 
-void status(int strength, int health, int magic) {
-    cout<<"strength:"<<strength<<endl;
-    cout<<"health:"<<health<<endl;
-    cout<<"magic:"<<magic<<endl;
+
+void status(string name, int strength, int health, int magic, int score) {
+    cout << "Name: " << name << endl;
+    cout << "Strength: " << strength << endl;
+    cout << "Health: " << health << endl;
+    cout << "Magic: " << magic << endl;
+    cout << "Score: " << score << endl;
 }
 
 class Enemy {
@@ -169,14 +194,16 @@ class Enemy {
     string description;
     float attackPower;
     float healthPoints;
+    int scoreValue;
 
 public:
     Enemy() {}
-    Enemy(string tempName,string tempDescription, float tempAttackPower, float tempHealthPoints) {
+    Enemy(string tempName,string tempDescription, float tempAttackPower, float tempHealthPoints, int tempScoreValue = 10) {
         name = tempName;
         description = tempDescription;
         attackPower = tempAttackPower;
         healthPoints = tempHealthPoints;
+        scoreValue = tempScoreValue;
     }
 
     string getName() {
@@ -191,6 +218,9 @@ public:
     float getHealthPoints() {
         return healthPoints;
     }
+    int getScoreValue() {
+        return scoreValue;
+    }
 
     void setName(string tempName) {
         name = tempName;
@@ -203,6 +233,9 @@ public:
     }
     void setHealthPoints(float tempHealthPoints) {
         healthPoints = tempHealthPoints;
+    }
+    void setScoreValue(int tempScoreValue) {
+        scoreValue = tempScoreValue;
     }
 };
 
@@ -227,12 +260,14 @@ public:
             cout << "Description: " << eTemp->getDescription() << endl;
             cout << "Attack Power: " << eTemp->getAttackPower() << endl;
             cout << "Health Points: " << eTemp->getHealthPoints() << endl;
+            cout << "Score Value: " << eTemp->getScoreValue() << endl;
             eTemp++;
         }
     }
 };
 
-bool fightEnemy(player &p, string enemyName, string enemyDesc, float enemyAttack, float enemyHealth) {
+
+bool fightEnemy(player &p, string enemyName, string enemyDesc, float enemyAttack, float enemyHealth, int enemyScore = 10) {
     cout << "You are fighting a " << enemyName  << endl;
     cout << enemyDesc << endl;
 
@@ -245,6 +280,8 @@ bool fightEnemy(player &p, string enemyName, string enemyDesc, float enemyAttack
 
         if(enemyHealth <= 0) {
             cout << "You defeated the " << enemyName << endl;
+            p.addScore(enemyScore);
+            cout << "You earned " << enemyScore << " points!" << endl;
             return true;
         }
 
@@ -254,17 +291,57 @@ bool fightEnemy(player &p, string enemyName, string enemyDesc, float enemyAttack
 
         if(playerHP <= 0) {
             cout << "You were defeated by the " << enemyName  << endl;
-            cout<<"game over"<< endl;
+            cout<<"Game over"<< endl;
             p.sethealth(playerHP);
             return false;
         }
 
-        cout << "Your health: " << playerHP <<"enemy" <<enemyName << "' health: " << enemyHealth << endl;
+        cout << "Your health: " << playerHP << " | Enemy " << enemyName << "'s health: " << enemyHealth << endl;
     }
 
     p.sethealth(playerHP);
     return false;
 }
+
+
+void saveGame(string name, int strength, int health, int magic, int score, int gameState) {
+    ofstream saveFile("save.txt");
+    if(saveFile.is_open()) {
+        saveFile << name << "," << strength << "," << health << "," << magic << "," << score << "," << gameState;
+        cout << "Game saved " << endl;
+        saveFile.close();
+    } else {
+        cout << "Unable to save game" << endl;
+    }
+}
+
+bool loadGame(string &name, int &strength, int &health, int &magic, int &score, int &gameState) {
+    ifstream saveFile("save.txt");
+    if(saveFile.is_open()) {
+        string line, value;
+        getline(saveFile, line);
+        stringstream ss(line);
+        vector<string> values;
+
+        while(getline(ss, value, ',')) {
+            values.push_back(value);
+        }
+
+        if(values.size() >= 6) {
+            name = values[0];
+            strength = stoi(values[1]);
+            health = stoi(values[2]);
+            magic = stoi(values[3]);
+            score = stoi(values[4]);
+            gameState = stoi(values[5]);
+            return true;
+        }
+        saveFile.close();
+    }
+    return false;
+}
+
+
 
 int main() {
 
@@ -275,17 +352,13 @@ int main() {
     s1.displayPlayersVector();
 
     EnemyVector enemySystem;
-    Enemy darkWolf("Dark Wolf", "A wolf that can hide in shadows", 15.0, 50.0);
-    Enemy dragon("Dragon", "A dragon only choose one can beat", 30.0, 200.0);
-    Enemy demon("Demon", "A mysterious creature from another realm", 25.0, 100.0);
-    Enemy goblin("Goblin", "A small goblin", 10.0, 30.0);
-    Enemy bandit("Bandit", "A human who preys on people", 20.0, 75.0);
+    Enemy darkWolf("Dark Wolf", "A wolf that can hide in shadows", 15.0, 50.0, 10);
+    Enemy dragon("Dragon", "A dragon only choose one can beat", 30.0, 200.0, 20);
+    Enemy demon("Demon", "A mysterious creature from another realm", 25.0, 100.0, 15);
 
     enemySystem.setVector(darkWolf);
     enemySystem.setVector(dragon);
     enemySystem.setVector(demon);
-    enemySystem.setVector(goblin);
-    enemySystem.setVector(bandit);
 
     WeatherVector weatherSystem;
     weatherSystem.loadWeatherFromFile("weather.txt");
@@ -293,36 +366,62 @@ int main() {
     int choice;
     int strength = 10, health = 100, magic = 10;
     int gameState = 0;
+    int score = 0;
+    string playerName = "name";
 
-    cout << "Welcome to play brave adventure. \nWhen health less than 0, you die. \nPress 1 to start the game" << endl;
+    cout << "Welcome to Brave Adventure. \nWhen health less than 0, you die." << endl;
+    cout << "Press 1 Start the game\nPress 2 Load the game" << endl;
     cin >> choice;
 
+    if (choice == 2) {
+        if(loadGame(playerName, strength, health, magic, score, gameState)) {
+            cout << "Welcome back, " << playerName << endl;
+            status(playerName, strength, health, magic, score);
+        } else {
+            cout << "No save file found. Starting a new game." << endl;
+            choice = 1;
+        }
+    }
+
     if (choice == 1) {
-        gameState = 1;
+        cout << "Enter your name";
+        cin.ignore();
+        getline(cin, playerName);
+        cout << "Welcome, " << playerName << " Press 1 to start the game" << endl;
+        cin >> choice;
+    }
+
+    if (choice == 1) {
+        if (gameState == 0) {
+            gameState = 1;
+        }
+
+        player currentPlayer(strength, health, magic);
+        currentPlayer.setName(playerName);
+        currentPlayer.setScore(score);
 
         while (health > 0) {
+            if (gameState > 1 && rand() % 100 < 25) {
+                Weather currentWeather = weatherSystem.getRandomWeather();
+                cout << "\nWeather Today " << endl;
+                currentWeather.displayWeather();
 
-            if (gameState > 1) {
-                if (rand() % 100 < 25) {
-                    Weather currentWeather = weatherSystem.getRandomWeather();
-                    cout << "\nWeather Today " << endl;
-                    currentWeather.displayWeather();
+                currentPlayer.setstrength(strength);
+                currentPlayer.sethealth(health);
+                currentPlayer.setmagic(magic);
+                currentWeather.applyWeatherEffect(currentPlayer);
 
-                    player currentPlayer(strength, health, magic);
-                    currentWeather.applyWeatherEffect(currentPlayer);
+                strength = currentPlayer.getstrength();
+                health = currentPlayer.gethealth();
+                magic = currentPlayer.getmagic();
 
-                    strength = currentPlayer.getstrength();
-                    health = currentPlayer.gethealth();
-                    magic = currentPlayer.getmagic();
-
-                    cout << "After weather effects your status" << endl;
-                    status(strength, health, magic);
-                }
+                cout << "After weather effects your status:" << endl;
+                status(playerName, strength, health, magic, score);
             }
 
             switch (gameState) {
                 case 1:
-                    cout << "You turn to 18 today, now you find priest to become \n1 Swordsman \n2 Magician" << endl;
+                    cout << "You turn to 18 today, now you find priest to become \n1 Swordsman \n2 Magician \n3 Save Game" << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -333,13 +432,16 @@ int main() {
                     cout << "You choose to become a Magician" << endl;
                     gameState = 10;
                 }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
+                }
                 else {
-                    cout << "please enter number 1 or 2" << endl;
+                    cout << "please enter number 1, 2 or 3" << endl;
                 }
                 break;
 
                 case 2:
-                    cout << "now what should i do?\n1 Go out adventure \n2 keep training(10 years)" << endl;
+                    cout << "now what should i do?\n1 Go out adventure \n2 keep training(10 years) \n3 Save Game" << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -350,66 +452,78 @@ int main() {
                     cout << "you gain the 20 strength and 30 health " << endl;
                     strength += 20;
                     health += 30;
-                    status(strength, health, magic);
+                    status(playerName, strength, health, magic, score);
                     gameState = 7;
                 }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
+                }
                 else {
-                    cout << "please enter number 1 or 2" << endl;
+                    cout << "please enter number 1, 2 or 3" << endl;
                 }
                 break;
 
                 case 3:
-                    cout << "in dark area you met the dark wolf, this wolf can hide in the shadow. \n1 run away \n2 fight" << endl;
+                    cout << "in dark area you met the dark wolf, this wolf can hide in the shadow. \n1 run away \n2 fight \n3 Save Game" << endl;
                 cin >> choice;
 
                 if (choice == 1) {
                     cout << "you try to run away,your back got hit, you injured  " << endl;
                     health -= 20;
                     strength -= 2;
-                    status(strength, health, magic);
+                    status(playerName, strength, health, magic, score);
                     gameState = 4;
                 }
                 else if (choice == 2) {
-                    player currentPlayer(strength, health, magic);
-                    bool victory = fightEnemy(currentPlayer, "Dark Wolf", "A wolf that can hide in shadows", 15.0, 50.0);
+                    currentPlayer.setstrength(strength);
+                    currentPlayer.sethealth(health);
+                    currentPlayer.setmagic(magic);
+                    bool victory = fightEnemy(currentPlayer, "Dark Wolf", "A wolf that can hide in shadows", 15.0, 50.0, 10);
 
                     health = currentPlayer.gethealth();
+                    score = currentPlayer.getScore();
 
                     if (victory) {
                         cout << "you beat the dark wolf and got dark material" << endl;
-                        status(strength, health, magic);
+                        status(playerName, strength, health, magic, score);
                         gameState = 6;
                     } else {
                         if (health > 0) {
                             cout << "you lose, but lucky you run away" << endl;
                             health -= 10;
-                            status(strength, health, magic);
+                            status(playerName, strength, health, magic, score);
                             gameState = 4;
                         } else {
-                            cout << "please enter number 1 or 2" << endl;
+                            cout << "please enter number 1, 2 or 3" << endl;
                         }
                     }
+                }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
                 }
                 break;
 
                 case 4:
-                    cout << "you are injured \n1 should i go hospital \n2 ignore it   " << endl;
+                    cout << "you are injured \n1 go hospital \n2 ignore it \n3 Save Game" << endl;
                 cin >> choice;
 
                 if (choice == 1) {
                     cout << "you stay hospital 5 mouths you feel good now. " << endl;
                     health += 10;
-                    status(strength, health, magic);
+                    status(playerName, strength, health, magic, score);
                     gameState = 5;
                 }
                 else if (choice == 2) {
                     cout << "The injury more serious than you expected. \nYou die \n---Contempt Ending---" << endl;
                     health = 0;
                 }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
+                }
                 break;
 
                 case 5:
-                    cout << "After 5 months, a mysterious creature comes to your room, saying he can fulfill your wishes. \n1make a wish \n2you dont believe him " << endl;
+                    cout << "After 5 months, a mysterious creature comes to your room, saying he can fulfill your wishes. \n1 make a wish \n2 you dont believe him \npress 3 Save Game" << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -417,10 +531,13 @@ int main() {
                     health = 0;
                 }
                 else if (choice == 2) {
-                    player currentPlayer(strength, health, magic);
-                    bool victory = fightEnemy(currentPlayer, "Demon", "A mysterious creature from another realm", 25.0, 100.0);
+                    currentPlayer.setstrength(strength);
+                    currentPlayer.sethealth(health);
+                    currentPlayer.setmagic(magic);
+                    bool victory = fightEnemy(currentPlayer, "Demon", "A mysterious creature from another realm", 25.0, 100.0, 15);
 
                     health = currentPlayer.gethealth();
+                    score = currentPlayer.getScore();
 
                     if (victory) {
                         cout << "You find out he is demon, he try to attack you, you beat him. The villagers find out that you defeated the mysterious creature, which is a demon, and you become a hero. \n---Hero Ending---" << endl;
@@ -428,7 +545,11 @@ int main() {
                     } else {
                         cout << "You find out he is demon, he try to attack you, but you are too weak to avoid his attack. \nYou die. \n---Unlucky Ending---" << endl;
                         health = 0;
+
                     }
+                }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
                 }
                 break;
 
@@ -439,19 +560,22 @@ int main() {
                 if (choice == 1) {
                     cout << "you get a sword" << endl;
                     strength += 5;
-                    status(strength, health, magic);
+                    status(playerName, strength, health, magic, score);
                     gameState = 8;
                 }
                 else if (choice == 2) {
                     cout << "you get a armor" << endl;
                     health += 15;
-                    status(strength, health, magic);
+                    status(playerName, strength, health, magic, score);
                     gameState = 8;
+                }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
                 }
                 break;
 
                 case 7:
-                    cout << "after 10 years training you turn to first-class swordsman. what should i do now ?  \n1 show your power to people \n2 keep training(20 years)" << endl;
+                    cout << "after 10 years training you turn to first-class swordsman. what should i do now ?  \n1 show your power to people \n2 keep training(20 years) " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -462,16 +586,19 @@ int main() {
                     cout << "keep training 20 years " << endl;
                     strength += 100;
                     health += 100;
-                    status(strength, health, magic);
+                    status(playerName, strength, health, magic, score);
                     gameState = 9;
                 }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
+                }
                 else {
-                    cout << "please enter number 1 or 2" << endl;
+                    cout << "please enter number 1, 2 or 3" << endl;
                 }
                 break;
 
                 case 8:
-                    cout << "One day, a dragon comes to town. \n1 Run away \n2 Participate in the fight with the Dragon" << endl;
+                    cout << "One day, a dragon comes to town. \n1 Run away \n2 Participate in the fight with the Dragon " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -479,10 +606,13 @@ int main() {
                     health = 0;
                 }
                 else if (choice == 2) {
-                    player currentPlayer(strength, health, magic);
-                    bool victory = fightEnemy(currentPlayer, "Dragon", "A dragon only choose one can beat", 30.0, 200.0);
+                    currentPlayer.setstrength(strength);
+                    currentPlayer.sethealth(health);
+                    currentPlayer.setmagic(magic);
+                    bool victory = fightEnemy(currentPlayer, "Dragon", "A dragon only choose one can beat", 30.0, 200.0, 20);
 
                     health = currentPlayer.gethealth();
+                    score = currentPlayer.getScore();
 
                     if (victory) {
                         cout << "You bravely fight the dragon, after a hard battle, you victorious! \n---Hero Ending---." << endl;
@@ -492,23 +622,31 @@ int main() {
                         health = 0;
                     }
                 }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
+                }
                 break;
 
                 case 9:
                     cout << "you believe you are the best swordsman on the words you challenge the strongest swordsman " << endl;
+                cin >> choice;
 
-                if (strength > 25) {
-                    cout << "your are the strongest now\n---strongest Ending--- " << endl;
-                    health = 0;
-                }
-                else {
-                    cout << "you lose, you whole life try to become to best but you still cant reach that level \n---Normal Ending--- " << endl;
-                    health = 0;
+                if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
+                } else {
+                    if (strength > 25) {
+                        cout << "your are the strongest now\n---strongest Ending--- " << endl;
+                        health = 0;
+                    }
+                    else {
+                        cout << "you lose, you whole life try to become to best but you still cant reach that level \n---Normal Ending--- " << endl;
+                        health = 0;
+                    }
                 }
                 break;
 
                 case 10:
-                    cout << "your talent on magic is bad(fall 8 strength) \n1 exploring magic area(5 years) \n2 give up change to swordsmam  " << endl;
+                    cout << "your talent on magic is bad(fall 8 strength) \n1 exploring magic area(5 years) \n2 give up change to swordsmam " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -519,13 +657,16 @@ int main() {
                     cout << "you find priest change career, but he said when you already chose the career can't be change. \nIn rest of the year you done nothing until to dead \n---Lazy Ending---  " << endl;
                     health = 0;
                 }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
+                }
                 else {
-                    cout << "please enter number 1 or 2" << endl;
+                    cout << "please enter number 1, 2 or 3" << endl;
                 }
                 break;
 
                 case 11:
-                    cout << "you decided to \n1 get out \n2 keep training(20 years)" << endl;
+                    cout << "you decided to \n1 get out \n2 keep training(20 years) " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -535,13 +676,16 @@ int main() {
                 else if (choice == 2) {
                     cout << "you realise you almost hit the magic truth " << endl;
                     magic += 70;
-                    status(strength, health, magic);
+                    status(playerName, strength, health, magic, score);
                     gameState = 14;
+                }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
                 }
                 break;
 
                 case 12:
-                    cout << "The team in 5 year turn to A class, they deiced you be a leader \n1 accept \n2 reject" << endl;
+                    cout << "The team in 5 year turn to A class, they deiced you be a leader \n1 accept \n2 reject " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -549,13 +693,16 @@ int main() {
                     gameState = 13;
                 }
                 else if (choice == 2) {
-                    cout << "You reject the leader " << endl;
+                    cout << "You reject the leader \nThe new leader is cautious, your party never take the risk until retired. \n---ordinary ending--- " << endl;
                     health = 0;
+                }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
                 }
                 break;
 
                 case 13:
-                    cout << "You accept the leader, now have a option to become s tier s should we join the mission \n1 join \n2 reject  " << endl;
+                    cout << "You accept the leader, now have a option to become s tier s should we join the mission \n1 join \n2 reject " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -564,37 +711,50 @@ int main() {
                     int enemyType = rand() % 100;
                     string enemyName, enemyDesc;
                     float enemyAttack, enemyHealth;
+                    int enemyScore = 15;
 
                     if (enemyType == 0) {
                         enemyName = "Dark Elf";
                         enemyDesc = "A powerful magic user from the underworld";
-                        enemyAttack = 25.0;
+                        enemyAttack = 20.0;
                         enemyHealth = 120.0;
+                        enemyScore = 15;
                     } else if (enemyType == 1) {
                         enemyName = " Golem";
                         enemyDesc = "A massive stone creature guarding the dungeon";
-                        enemyAttack = 35.0;
-                        enemyHealth = 180.0;
+                        enemyAttack = 8.0;
+                        enemyHealth = 210.0;
+                        enemyScore = 20;
                     } else {
                         enemyName = "Cave Troll";
                         enemyDesc = "A brutish creature with regenerative abilities";
-                        enemyAttack = 30.0;
-                        enemyHealth = 150.0;
+                        enemyAttack = 25.0;
+                        enemyHealth = 80.0;
+                        enemyScore = 18;
                     }
 
-                    player currentPlayer(strength, health, magic);
-                    bool victory = fightEnemy(currentPlayer, enemyName, enemyDesc, enemyAttack, enemyHealth);
+                    currentPlayer.setstrength(strength);
+                    currentPlayer.sethealth(health);
+                    currentPlayer.setmagic(magic);
+                    bool victory = fightEnemy(currentPlayer, enemyName, enemyDesc, enemyAttack, enemyHealth, enemyScore);
+
+                    health = currentPlayer.gethealth();
+                    score = currentPlayer.getScore(); // Update score
 
                     if (victory) {
-                        cout << "Your team defeats the " << enemyName << " and becomes S-tier! \nhappy Ending" << endl;
+                        cout << "Your team defeats the " << enemyName << " and becomes S-tier! \n---happy Ending---" << endl;
                     } else {
-                        cout << "Your team is defeated by the " << enemyName << ". \nUnfortunate Ending" << endl;
+                        cout << "Your team is defeated by the " << enemyName << ". \n---Unfortunate Ending---" << endl;
+
                     }
                     health = 0;
                 }
                 else if (choice == 2) {
                     cout << "you reject, cause you dont fill you guys ready yet \nthe party until you retired didn't do anything suprise \n---Normal Ending--- " << endl;
                     health = 0;
+                }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
                 }
                 break;
 
@@ -603,22 +763,25 @@ int main() {
                 cin >> choice;
 
                 if (choice == 1) {
-                    cout << "You a one of the best magician, a lot party try to invite you to join.  " << endl;
+                    cout << "You a one of the best magician, a lot party try to invite you to join.\n ---Famous Magician Ending---" << endl;
                     health = 0;
                 }
                 else if (choice == 2) {
-                    cout << "you find out the true meaning of magic \n---greatest magician Ending---" << endl;
-                    magic += 300;
-                    status(strength, health, magic);
+                    cout << "you find out the true meaning of magic \n---Greatest Magician Ending---" << endl;
                     health = 0;
+
+                }
+                else if (choice == 3) {
+                    saveGame(playerName, strength, health, magic, score, gameState);
                 }
                 break;
             }
 
-
-
             if (health <= 0) {
                 cout << "\n---Game Over---" << endl;
+                cout << playerName << "your Final Score " << score << endl;
+
+                remove("save.txt");
             }
         }
     }
