@@ -345,7 +345,7 @@ bool loadGame(string &name, int &strength, int &health, int &magic, int &score, 
 
 int main() {
 
-    srand(time(NULL));
+    srand(time(NULL)); //generate a redeem number
 
     PlayerVector s1;
     s1.readFile();
@@ -373,7 +373,7 @@ int main() {
     cout << "Press 1 Start the game\nPress 2 Load the game" << endl;
     cin >> choice;
 
-    if (choice == 2) {
+    if (choice == 2) { //save
         if(loadGame(playerName, strength, health, magic, score, gameState)) {
             cout << "Welcome back, " << playerName << endl;
             status(playerName, strength, health, magic, score);
@@ -383,7 +383,7 @@ int main() {
         }
     }
 
-    if (choice == 1) {
+    if (choice == 1) { //name
         cout << "Enter your name";
         cin.ignore();
         getline(cin, playerName);
@@ -391,7 +391,7 @@ int main() {
         cin >> choice;
     }
 
-    if (choice == 1) {
+    if (choice == 1) { // for me to know which one is next to next
         if (gameState == 0) {
             gameState = 1;
         }
@@ -401,7 +401,7 @@ int main() {
         currentPlayer.setScore(score);
 
         while (health > 0) {
-            if (gameState > 1 && rand() % 100 < 25) {
+            if (gameState > 1 && rand() % 100 < 25) { //weather
                 Weather currentWeather = weatherSystem.getRandomWeather();
                 cout << "\nWeather Today " << endl;
                 currentWeather.displayWeather();
@@ -419,16 +419,16 @@ int main() {
                 status(playerName, strength, health, magic, score);
             }
 
-            switch (gameState) {
+            switch (gameState) { //start
                 case 1:
-                    cout << "You turn to 18 today, now you find priest to become \n1 Swordsman \n2 Magician \n3 Save Game" << endl;
+                    cout << "You turn to 18 today, now you find priest to become \n1 Swordsman \n2 Magician " << endl;
                 cin >> choice;
 
-                if (choice == 1) {
+                if (choice == 1) { //swordsman
                     cout << "You choose to become a Swordsman" << endl;
                     gameState = 2;
                 }
-                else if (choice == 2) {
+                else if (choice == 2) { //magician
                     cout << "You choose to become a Magician" << endl;
                     gameState = 10;
                 }
@@ -440,8 +440,8 @@ int main() {
                 }
                 break;
 
-                case 2:
-                    cout << "now what should i do?\n1 Go out adventure \n2 keep training(10 years) \n3 Save Game" << endl;
+                case 2: //swordsman
+                    cout << "now what should i do?\n1 Go out adventure \n2 keep training(10 years) " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -463,8 +463,8 @@ int main() {
                 }
                 break;
 
-                case 3:
-                    cout << "in dark area you met the dark wolf, this wolf can hide in the shadow. \n1 run away \n2 fight \n3 Save Game" << endl;
+                case 3: //swordsman
+                    cout << "in dark area you met the dark wolf, this wolf can hide in the shadow. \n1 run away \n2 fight " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -503,7 +503,7 @@ int main() {
                 }
                 break;
 
-                case 4:
+                case 4: //swordsman
                     cout << "you are injured \n1 go hospital \n2 ignore it \n3 Save Game" << endl;
                 cin >> choice;
 
@@ -514,7 +514,7 @@ int main() {
                     gameState = 5;
                 }
                 else if (choice == 2) {
-                    cout << "The injury more serious than you expected. \nYou die \n---Contempt Ending---" << endl;
+                    cout << "The injury more serious than you expected. \nYou die \n---Contempt Ending---" << endl; // --- for easy to see
                     health = 0;
                 }
                 else if (choice == 3) {
@@ -522,8 +522,8 @@ int main() {
                 }
                 break;
 
-                case 5:
-                    cout << "After 5 months, a mysterious creature comes to your room, saying he can fulfill your wishes. \n1 make a wish \n2 you dont believe him \npress 3 Save Game" << endl;
+                case 5: //swordsman
+                    cout << "After 5 months, a mysterious creature comes to your room, saying he can fulfill your wishes. \n1 make a wish \n2 you dont believe him " << endl;
                 cin >> choice;
 
                 if (choice == 1) {
@@ -553,7 +553,7 @@ int main() {
                 }
                 break;
 
-                case 6:
+                case 6: //swordsman
                     cout << "You got dark material, go to weapon shop. make a? \n1 swords \n2 Armor " << endl;
                 cin >> choice;
 
@@ -574,7 +574,7 @@ int main() {
                 }
                 break;
 
-                case 7:
+                case 7: //swordsman
                     cout << "after 10 years training you turn to first-class swordsman. what should i do now ?  \n1 show your power to people \n2 keep training(20 years) " << endl;
                 cin >> choice;
 
@@ -597,7 +597,7 @@ int main() {
                 }
                 break;
 
-                case 8:
+                case 8: //swordsman
                     cout << "One day, a dragon comes to town. \n1 Run away \n2 Participate in the fight with the Dragon " << endl;
                 cin >> choice;
 
@@ -627,7 +627,7 @@ int main() {
                 }
                 break;
 
-                case 9:
+                case 9: //swordsman
                     cout << "you believe you are the best swordsman on the words you challenge the strongest swordsman " << endl;
                 cin >> choice;
 
@@ -645,7 +645,7 @@ int main() {
                 }
                 break;
 
-                case 10:
+                case 10: //magician
                     cout << "your talent on magic is bad(fall 8 strength) \n1 exploring magic area(5 years) \n2 give up change to swordsmam " << endl;
                 cin >> choice;
 
@@ -665,7 +665,7 @@ int main() {
                 }
                 break;
 
-                case 11:
+                case 11: //magician
                     cout << "you decided to \n1 get out \n2 keep training(20 years) " << endl;
                 cin >> choice;
 
@@ -684,7 +684,7 @@ int main() {
                 }
                 break;
 
-                case 12:
+                case 12: //magician
                     cout << "The team in 5 year turn to A class, they deiced you be a leader \n1 accept \n2 reject " << endl;
                 cin >> choice;
 
@@ -701,7 +701,7 @@ int main() {
                 }
                 break;
 
-                case 13:
+                case 13: //magician
                     cout << "You accept the leader, now have a option to become s tier s should we join the mission \n1 join \n2 reject " << endl;
                 cin >> choice;
 
@@ -738,8 +738,8 @@ int main() {
                     currentPlayer.setmagic(magic);
                     bool victory = fightEnemy(currentPlayer, enemyName, enemyDesc, enemyAttack, enemyHealth, enemyScore);
 
-                    health = currentPlayer.gethealth();
-                    score = currentPlayer.getScore(); // Update score
+                    health = currentPlayer.gethealth(); //update health
+                    score = currentPlayer.getScore(); //update score
 
                     if (victory) {
                         cout << "Your team defeats the " << enemyName << " and becomes S-tier! \n---happy Ending---" << endl;
@@ -758,7 +758,7 @@ int main() {
                 }
                 break;
 
-                case 14:
+                case 14: //magician
                     cout << "After training (20 years), should i \n1 get out \n2 keep training(30 years) " << endl;
                 cin >> choice;
 
@@ -781,7 +781,7 @@ int main() {
                 cout << "\n---Game Over---" << endl;
                 cout << playerName << "your Final Score " << score << endl;
 
-                remove("save.txt");
+                remove("save.txt"); //remove it after the game
             }
         }
     }
